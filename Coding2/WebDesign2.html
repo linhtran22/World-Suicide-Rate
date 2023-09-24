@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>World Suicide Rate - version 2</title>
+
+    <link href="bootstrap.css" rel="stylesheet" media="screen" />
+    <link rel = "stylesheet" href = "Design.css"></link>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script type="text/javascript" src="http://public.tableau.com/javascripts/api/tableau-2.min.js"
+    ></script>
+    
+    <script type="text/javascript" src="Functionver2.js"></script>
+</head>
+
+
+<body onload= "initViz()"  >
+    <!-- <nav class="navbar navbar-inner navbar-inverse w-100">
+        
+        <div class="container-fluid ">
+
+            <ul class="nav navbar-nav">
+                <li><a href="#" onclick="switchView('Map main');showAction('Home')"> Home</a></li>
+                <li><a href="#" onclick="switchView('BANS');showAction('BANS')" > Statistic</a></li>
+                <li><a href="#" onclick="switchView('Dumbbell'); showAction('Dumbbell')"> Dumbbell Chart</a></li>
+                <li><a href="#" onclick="switchView('Stacked Bar'); showAction('Stacked Bar')"> Stacked Bar Chart</a></li>
+                <li><a href="#" onclick="switchView('Bump Chart'); showAction('Bump Chart')"> Bump Chart</a></li>
+                <li><a href="#" onclick="switchView('Lollipop'); showAction('Lollipop')"> Lollipop Chart</a></li>
+            </ul>
+        </div>
+    </nav> -->
+    
+    <div id = "bgimg"></div>
+
+    <nav class="navbar navbar-inner navbar-inverse w-100">
+        
+        <div class="container-fluid ">
+
+            <ul class="nav navbar-nav" >
+                <a href = "#" class="pull-left"><img src = "LTlogo2.jpg" width="200px"> </a>
+                <li><a href="#" onclick="switchView('Map main');showAction('Home')"> Home</a></li>
+                <li><a href="#" onclick="switchView('BANS');showAction('BANS')" > Statistic</a></li>
+                <li><a href="#" onclick="switchView('Dumbbell'); showAction('Dumbbell')"> Dumbbell Chart</a></li>
+                <li><a href="#" onclick="switchView('Stacked Bar'); showAction('Stacked Bar')"> Stacked Bar Chart</a></li>
+                <li><a href="#" onclick="switchView('Bump Chart'); showAction('Bump Chart')"> Bump Chart</a></li>
+                <li><a href="#" onclick="switchView('Lollipop'); showAction('Lollipop')"> Lollipop Chart</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <h2 id = 'vizTitle' ></h2>
+
+    <div id="HomeDesc">
+        <p> Suicide is death caused by injuring oneself with the intent to die. A suicide attempt is when someone harms themselves with any intent to end their life, but they do not die as a result of their actions</p>
+        <p>The main risk factors for suicide are: </p>
+        <ul>
+            <li>A history of suicide attempts</li>
+            <li>Depression, other mental disorders, or substance use disoder</li>
+            <li>Chronic pain</li>
+            <li>Family history of a mental disorder or substance use</li> 
+            <li>Family history of suicide</li>
+            <li>Exposure to family violencem including physical or sexual abuse</li>
+            <li>Presence of guns or other firearms in the home</li>
+            <li>Having recently been released from prison or jail</li>
+            <li>Exposure, either directly or indirectly, to others’ suicidal behavior, such as that of family members, peers, or celebrities</li>
+        </ul>  
+    </div>
+
+    <div id = "BANSDesc">
+        <p>This chart will show the total suicides in each group from the whole world</p>
+        <p>By choosing different category from drop-down list, the chart will display different suicide values and highlight the highest suicide target group accordingly.</p>
+    </div>
+    
+
+    <div id = "DumbbellDesc">
+        <p>This Dumbbell chart will show the different suidice numbers between male and female in each catorogy.</p>
+        <p>For most cases, male tends to suicide more than female.</p>
+    </div>
+
+
+    <div id = "StackedDesc">
+        <p>This graph firstly display the most suicide country descendingly.</p>
+        <p>Within each country: </p>
+        <ul>
+            <li>By Generation, the most suicide group is Boomers</li>
+            <li>By Age, the most suicide group is 35-54 Years</li>
+            <li>By Gender, the most suicide group is Male</li>
+        </ul>
+    </div>
+
+    
+    <div id = "BumpChartDesc">
+        <p>This graph will rank the selected category by the most suicide over the year.</p>
+        <p>Over the year </p>
+        <ul>
+            <li>By country, the graph display top 10 countries descendingly. The ranking changes by year.</li>
+            <li>By Generation, the suicide group is not consistent.</li>
+            <li>By Age, there is no change within each age target. However, 75+ Years group and 15-24 Years group seems to be swap order at some certain years. </li>
+            <li>By Gender, Male group always have the higest suicide number</li>
+        </ul>
+    </div>
+
+    <div id = "LollipopDesc">
+        <p>This chart will show the total suicides in each group from the whole world</p>
+        <p>By choosing different category from drop-down list, the chart will display different suicide values and highlight the highest suicide target group accordingly.</p>
+        <ul>
+            <li>By Generation, the most suicide group is Boomers</li>
+            <li>By Age, the most suicide group is 35-54 Years</li>
+            <li>By Gender, the most suicide group is Male</li>
+            <li>By Coutry, Russian Federation is the highest suicide country</li>
+        </ul>
+    </div>
+   
+    <div id = "vizContainer1">	</div>
+
+
+        <div class="row">
+            <div class = "col-md-4" id="Selector">
+                <h3>Select By: </h3>
+                <select   onchange="changeParam('Select By',value, [workbook]); console.log(value);">   
+                    <option value="Generation">Generation</option>
+                    <option value="Age"> Age</option>
+                    <option value="Gender">Gender</option>
+                    <option value="Country">Country</option>
+                </select>
+            </div>
+
+            <div class = "col-md-4" id="SelectWithinCountry">
+                <h3>Select Within a Country: </h3>
+                <select onchange="changeParam('SelectorWithinCountry',value, [workbook]); console.log(value);">   
+                    <option value="Generation">Generation</option>
+                    <option value="Age"> Age</option>
+                    <option value="Gender">Gender</option>
+                </select>
+            </div>
+
+            <div class = "col-md-4" id="SelectWithinGender">
+                <h3>Select Within a Gender: </h3>
+                <select onchange="changeParam('SelectorWithinGender',value, [workbook]); console.log(value);">   
+                    <option value="Generation">Generation</option>
+                    <option value="Age"> Age</option>
+                    <option value="Country">Country</option>
+                </select>
+            </div>
+
+            <div class="col-md-4" style = "display:none" id = "ActionButtons">
+                <h3>Functions:</h3>
+                <button class="btn btn-default" onclick="viz.undoAsync()">
+                    Undo <i class="fa fa-undo" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-default" onclick="viz.redoAsync()">
+                    Redo <i class="fa fa-repeat" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-default" onclick="viz.revertAllAsync()">
+                    Reset <i class="fa fa-refresh" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+</body>
+
+</html>
